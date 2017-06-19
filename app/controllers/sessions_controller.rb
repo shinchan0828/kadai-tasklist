@@ -14,21 +14,27 @@ class SessionsController < ApplicationController
     end
   end
 
+  def edit
+    @task = Task.find(params[:id])
+  end
+  
   def destroy
     session[:user_id] = nil
     flash[:success] = 'ログアウトしました。'
     redirect_to root_path
   end
-end
 
-private
+  private
 
   def login(email, password)
     @user = User.find_by(email: email)
     if @user && @user.authenticate(password)
+    
       session[:user_id] = @user.id
       return true
     else
+    
       return false
     end
   end
+end
